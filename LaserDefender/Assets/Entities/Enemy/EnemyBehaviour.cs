@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyBehaviour : MonoBehaviour {
 
     public float health = 150;
+
+    public float maxHealth = 200;
+
     public GameObject projectile;
     public float projectileSpeed;
     public float firingRate = 1;
-
     public float shotsPerSecond = 0.5f;
 
     public int scoreValue = 150;
@@ -18,8 +21,11 @@ public class EnemyBehaviour : MonoBehaviour {
 
     private ScoreKeeper scoreKeeper;
 
+    private Image healthBar;
+
     private void Start()
     {
+        InitializeHealthBars();
         scoreKeeper = GameObject.Find("Score").GetComponent<ScoreKeeper>();
     }
 
@@ -31,11 +37,17 @@ public class EnemyBehaviour : MonoBehaviour {
         {
             health -= missile.GetDamage();
             missile.Hit();
-            if(health <= 0)
+            healthBar.fillAmount = health / maxHealth;
+            if (health <= 0)
             {
                 Die();
             }
         }
+    }
+
+    public void InitializeHealthBars()
+    {
+        healthBar = transform.Find("HealthBG").Find("Health").GetComponent<Image>();
     }
 
     void Die()

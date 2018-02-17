@@ -8,7 +8,16 @@ public class LevelManager : MonoBehaviour {
 
     private void Start()
     {
-        Invoke("LoadNextLevel", autoLoadNextLevelAfter);
+        int currLevel = SceneManager.GetActiveScene().buildIndex;
+        if (currLevel == 0)
+        {
+            Invoke("LoadNextLevel", autoLoadNextLevelAfter);
+        }
+        else if (autoLoadNextLevelAfter < 0)
+        {
+            Debug.LogError("Use a positive number in secounds!");
+        }
+        
     }
 
     public void LoadLevel(string name){
@@ -23,7 +32,11 @@ public class LevelManager : MonoBehaviour {
 
     public void LoadNextLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
+    public int countLevels()
+    {
+        return SceneManager.sceneCountInBuildSettings;
+    }
 }

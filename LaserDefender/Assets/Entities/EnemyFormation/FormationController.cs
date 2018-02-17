@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FormationController : MonoBehaviour
 {
 
     public GameObject enemyPrefab;
-    public float width = 10f;
-    public float height = 5f;
+    public GameObject enemyPrefab2;
+    
+    public float width = 15f;
+    public float height = 8f;
     public float speed = 5f;
     public float spawnDelay = 0.5f;
 
@@ -15,12 +18,16 @@ public class FormationController : MonoBehaviour
     private float xmin;
     private float xmax;
 
+    private LevelManager levelManager;
+
 
 
 
     // Use this for initialization
     void Start()
     {
+        levelManager = GameObject.FindObjectOfType<LevelManager>();
+
         float distanceToCamera = transform.position.z - Camera.main.transform.position.z;
         Vector3 leftBoundary = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distanceToCamera));
         Vector3 rightBoundary = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distanceToCamera));
@@ -59,11 +66,21 @@ public class FormationController : MonoBehaviour
             movingRight = false;
         }
 
+        //If all enemies are dead, spawn new Enemies
+
+        //if (AllMembersDead())
+        //{
+        //    Debug.Log("Empty Formation");
+        //    SpawnUntilFull();
+        //}
+
+        //If all ships are Dead go to the next Scene in the index --> new Level or End Screen
+
         if (AllMembersDead())
         {
-            Debug.Log("Empty Formation");
-            SpawnUntilFull();
+            levelManager.loadNextLevel();
         }
+
 
     }
 
@@ -71,17 +88,30 @@ public class FormationController : MonoBehaviour
     {
         Transform freePosition = NextFreePosition();
 
+        int positionCount;
+        positionCount = transform.childCount;
+
+        
         if (freePosition)
         {
             GameObject enemy = Instantiate(enemyPrefab, freePosition.transform.position, Quaternion.identity) as GameObject;
             enemy.transform.parent = freePosition;
         }
+
+        else if (freePosition)
+        {
+            GameObject enemy = Instantiate(enemyPrefab2, freePosition.transform.position, Quaternion.identity) as GameObject;
+            enemy.transform.parent = freePosition;
+        }
+        
+
+        
+
         if (NextFreePosition())
         {
 
             Invoke("SpawnUntilFull", spawnDelay);
         }
-
         
     }
 
@@ -96,6 +126,7 @@ public class FormationController : MonoBehaviour
 
     Transform NextFreePosition()
     {
+        //iterates through every "Position" and check if there is an empty position
         foreach(Transform childPositionGameObject in transform)
         {
             if (childPositionGameObject.childCount == 0)

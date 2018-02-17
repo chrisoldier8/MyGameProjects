@@ -28,19 +28,20 @@ public class MusicPlayer : MonoBehaviour {
     private void OnLevelWasLoaded(int level)
     {
         Debug.Log("MusicPlayer loaded level: " +level);
-        music.Stop();
+        //music.Stop();
 
         if (level == 0)
         {
             music.clip = startClip;
         }
 
-        if (level == 1)
+
+        if (level == 2)
         {
             music.clip = gameClip;
         }
 
-        if (level == 2)
+        if (level == 3)
         {
             music.clip = endClip;
         }
