@@ -8,10 +8,17 @@ public class ScoreKeeper : MonoBehaviour {
     public static int score = 0;
     Text scoreText;
 
-	// Use this for initialization
-	void Start () {
+    private void Awake()
+    {
+        //DontDestroyOnLoad(gameObject);
+        print("Dont Destroy on Load ScoreKeeper");
+    }
+
+    // Use this for initialization
+    void Start () {
         scoreText = GetComponent<Text>();
-        Reset();
+        //Reset();
+        //print("Score reset Scorekeeper");
 	}
 	
 	// Update is called once per frame

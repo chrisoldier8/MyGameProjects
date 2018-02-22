@@ -13,8 +13,10 @@ public class ScoreDisplay : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Text myText = GetComponent<Text>();
-        myText.text = ScoreKeeper.score.ToString();
+        myText.text = PlayerPrefs.GetInt("Score").ToString();
+        //myText.text = ScoreKeeper.score.ToString();
         ScoreKeeper.Reset();
+        print("Score reset ScoreDisplay");
 	}
 	
 	// Update is called once per frame

@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Meteors
+    uniqueID: 1681399889
+    locked: 0
   - name: EnemyProjectiles
     uniqueID: 776297063
     locked: 0

@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour {
         Projectile missile = collision.gameObject.GetComponent<Projectile>();
         if (missile)
         {
-            Debug.Log("Player collided with a missile");
+            //Debug.Log("Player collided with a missile");
             health -= missile.GetDamage();
             missile.Hit();
             healthBar.fillAmount = health / maxHealth;
